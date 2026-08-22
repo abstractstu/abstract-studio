@@ -361,7 +361,9 @@ function createServicesObserver() {
 
         {
 
-            threshold: 0.15
+            threshold: 0,
+
+            rootMargin: "0px 0px -5% 0px"
 
         }
 
@@ -589,13 +591,10 @@ function initCinematicCameraTrack() {
         }
 
         // 2. SERVICES CINEMATIC STAGE FOCUS & PINNING
-        const vhCenter = vh * 0.5;
         serviceScenes.forEach((scene) => {
             const rect = scene.getBoundingClientRect();
-            const sceneCenter = rect.top + rect.height * 0.5;
-            const distFromCenter = Math.abs(sceneCenter - vhCenter);
-
-            if (distFromCenter < vh * 0.65) {
+            // Se activa en cuanto la sección entra por abajo (a menos del 90% del viewport) y se mantiene visible mientras esté en pantalla
+            if (rect.top < vh * 0.88 && rect.bottom > vh * 0.12) {
                 scene.classList.add("scene-active");
             } else {
                 scene.classList.remove("scene-active");
