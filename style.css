@@ -2905,6 +2905,25 @@ body.project-panel-open {
 
 @media (max-width: 640px) {
 
+    @media (max-width: 640px) {
+    .header .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-sm);
+    }
+
+    .brand-name {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .brand-name .logo-text {
+        font-size: clamp(1rem, 4.2vw, 1.25rem);
+    }
+}
+
     .hero-triangle {
         width: clamp(260px, 80vw, 420px);
     }
