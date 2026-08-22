@@ -2905,24 +2905,49 @@ body.project-panel-open {
 
 @media (max-width: 640px) {
 
-    @media (max-width: 640px) {
+    /* 1. Expandir contenedor al ancho total reduciendo el margen con las orillas */
     .header .container {
+        width: 100%;
+        max-width: 100%;
+        padding-inline: 0.85rem; /* Margen mínimo elegante con el borde */
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: var(--space-sm);
+        position: relative;
     }
 
+    /* 2. Mantener isotipo a la extrema izquierda */
+    .header-left {
+        gap: 0;
+        z-index: 2;
+    }
+
+    .logo img {
+        --logo-size: 42px; /* Tamaño optimizado para móvil */
+    }
+
+    /* 3. Centrar matemáticamente el texto en el viewport exacto */
     .brand-name {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: max-content;
+        pointer-events: auto;
+        z-index: 1;
+        text-align: center;
     }
 
     .brand-name .logo-text {
-        font-size: clamp(1rem, 4.2vw, 1.25rem);
+        font-size: clamp(0.95rem, 3.8vw, 1.15rem);
+        letter-spacing: 2px;
     }
-}
+
+    /* 4. Botón de menú a la extrema derecha */
+    .menu-toggle {
+        z-index: 2;
+        margin-left: auto;
+    }
 
     .hero-triangle {
         width: clamp(260px, 80vw, 420px);
