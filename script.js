@@ -193,7 +193,7 @@ function closeProjectPanel({ restoreFocus = true } = {}) {
 
 }
 
-function handleProjectFormSubmit(event) {
+async function handleProjectFormSubmit(event) {
 
     event.preventDefault();
 
@@ -222,12 +222,49 @@ function handleProjectFormSubmit(event) {
         return;
     }
 
-    if (projectFormNotice) projectFormNotice.textContent = "";
-    projectForm.hidden = true;
+    const submitBtn = projectForm.querySelector(".project-submit");
+    const originalBtnText = submitBtn ? submitBtn.textContent : "";
 
-    if (projectSuccess) {
-        projectSuccess.hidden = false;
-        projectSuccess.focus();
+    try {
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Enviando...";
+        }
+
+        const formData = new FormData(projectForm);
+        const response = await fetch(projectForm.action, {
+            method: "POST",
+            body: formData,
+            headers: {
+                Accept: "application/json"
+            }
+        });
+
+        if (response.ok) {
+            if (projectFormNotice) projectFormNotice.textContent = "";
+            projectForm.hidden = true;
+
+            if (projectSuccess) {
+                projectSuccess.hidden = false;
+                projectSuccess.focus();
+            }
+        } else {
+            const data = await response.json();
+            if (projectFormNotice) {
+                projectFormNotice.textContent = data.errors 
+                    ? data.errors.map(err => err.message).join(", ") 
+                    : "Hubo un error al enviar el formulario. Intenta de nuevo.";
+            }
+        }
+    } catch (error) {
+        if (projectFormNotice) {
+            projectFormNotice.textContent = "Error de conexión. Intenta nuevamente.";
+        }
+    } finally {
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
+        }
     }
 
 }
