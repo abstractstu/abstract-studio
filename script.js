@@ -199,6 +199,13 @@ async function handleProjectFormSubmit(event) {
 
     if (!projectForm) return;
 
+    // 1. Recortar espacios automáticamente en campos de texto, email y teléfono para evitar fallos por autocompletado móvil
+    projectForm.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea').forEach((field) => {
+        if (typeof field.value === "string") {
+            field.value = field.value.trim();
+        }
+    });
+
     const selectedServices = projectForm.querySelectorAll('input[name="servicios"]:checked').length;
     const invalidFields = Array.from(projectForm.querySelectorAll("input[required], textarea[required]"))
         .filter((field) => !field.checkValidity());
@@ -214,16 +221,26 @@ async function handleProjectFormSubmit(event) {
                 : "Revisa los campos marcados e inténtalo de nuevo.";
         }
 
+        // Enfocar primer campo no válido de forma segura en dispositivos móviles (evitar saltos de foco en inputs 1x1px ocultos)
         const firstInvalid = !selectedServices
             ? projectForm.querySelector('input[name="servicios"]')
             : invalidFields[0];
 
-        firstInvalid?.focus();
+        if (firstInvalid) {
+            const isVisuallyHidden = firstInvalid.type === "radio" || firstInvalid.type === "checkbox";
+            if (isVisuallyHidden) {
+                const parentGroup = firstInvalid.closest(".project-form__group");
+                parentGroup?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            } else {
+                firstInvalid.focus();
+            }
+        }
         return;
     }
 
     const submitBtn = projectForm.querySelector(".project-submit");
     const originalBtnText = submitBtn ? submitBtn.textContent : "";
+    const endpoint = projectForm.action || "https://formspree.io/f/xyegvakr";
 
     try {
         if (submitBtn) {
@@ -232,7 +249,7 @@ async function handleProjectFormSubmit(event) {
         }
 
         const formData = new FormData(projectForm);
-        const response = await fetch(projectForm.action, {
+        const response = await fetch(endpoint, {
             method: "POST",
             body: formData,
             headers: {
@@ -249,16 +266,34 @@ async function handleProjectFormSubmit(event) {
                 projectSuccess.focus();
             }
         } else {
-            const data = await response.json();
+            // Manejo seguro de la respuesta de error (soporta JSON o HTML de Formspree/reCAPTCHA/Servidor)
+            let errorMessage = "Hubo un problema al enviar tu mensaje. Inténtalo de nuevo o contáctanos por WhatsApp.";
+            try {
+                const data = await response.json();
+                if (data && Array.isArray(data.errors) && data.errors.length > 0) {
+                    errorMessage = data.errors.map((err) => err.message || err.field).join(", ");
+                } else if (data && data.error) {
+                    errorMessage = data.error;
+                }
+            } catch (_) {
+                // Si Formspree devolvió HTML (403, 429, 500 o desafío reCAPTCHA anti-spam)
+                if (response.status === 403) {
+                    errorMessage = "La solicitud fue rechazada por seguridad. Intenta desde el navegador principal o contáctanos por WhatsApp.";
+                } else if (response.status === 429) {
+                    errorMessage = "Has realizado varios intentos. Por favor espera unos minutos o escríbenos directamente por WhatsApp.";
+                } else if (response.status >= 500) {
+                    errorMessage = "El servicio de mensajería está temporalmente fuera de servicio. Por favor escríbenos por WhatsApp.";
+                }
+            }
+
             if (projectFormNotice) {
-                projectFormNotice.textContent = data.errors 
-                    ? data.errors.map(err => err.message).join(", ") 
-                    : "Hubo un error al enviar el formulario. Intenta de nuevo.";
+                projectFormNotice.textContent = errorMessage;
             }
         }
     } catch (error) {
+        // Error de red (offline, DNS o fallo de conexión)
         if (projectFormNotice) {
-            projectFormNotice.textContent = "Error de conexión. Intenta nuevamente.";
+            projectFormNotice.textContent = "Error de conexión. Verifica tu acceso a internet o contáctanos directamente por WhatsApp.";
         }
     } finally {
         if (submitBtn) {
