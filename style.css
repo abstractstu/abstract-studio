@@ -755,7 +755,7 @@ body.menu-open .menu-toggle span:nth-child(3) {
 .hero-description {
     max-width: 52ch;
     font-size: var(--fs-lg);
-    color: var(--accent);
+    color: var(--text-soft);
     text-align: center;
     margin-inline: auto;
     text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
