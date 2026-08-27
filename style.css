@@ -1070,7 +1070,7 @@ body.menu-open .menu-toggle span:nth-child(3) {
 
 /* ============================================================
    SERVICES LOGOS / 3D SYMBOLS
-   Especificidad para los SVG dentro de .service-scene
+   Especificidad para los 5 SVG dentro de .service-scene
    ============================================================ */
 
 .service-scene .logo {
@@ -1148,6 +1148,10 @@ body.menu-open .menu-toggle span:nth-child(3) {
 .service-scene[data-service="video"] .logo img {
     --logo-scale: 1.68;
     animation-direction: reverse;
+}
+
+.service-scene[data-service="marketing"] .logo img {
+    --logo-scale: 2.13;
 }
 
 .service-scene.scene-active .logo img {
