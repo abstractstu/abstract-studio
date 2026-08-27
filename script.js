@@ -636,8 +636,8 @@ function initCinematicCameraTrack() {
     const serviceScenes = document.querySelectorAll(".service-scene");
     
     const aboutSection = document.querySelector("#about");
-    const plasmaMass = document.querySelector(".plasma-mass");
-    const plasmaGlow = document.querySelector(".about-glow");
+    const prismCore = document.querySelector(".prism-core");
+    const prismGlow = document.querySelector(".prism-glow");
 
     let currentScroll = window.scrollY;
     let targetScroll = window.scrollY;
@@ -673,17 +673,19 @@ function initCinematicCameraTrack() {
             }
         });
 
-        // 3. ABOUT PLASMA REACTOR REACTION
-        if (aboutSection && plasmaMass) {
+        // 3. ABOUT PRISM REACTION
+        if (aboutSection && (prismCore || prismGlow)) {
             const rect = aboutSection.getBoundingClientRect();
             if (rect.top < vh && rect.bottom > 0) {
                 const enterProgress = Math.max(0, Math.min(1, (vh - rect.top) / (vh + rect.height)));
                 const scale = 1 + enterProgress * 0.07;
                 const glowOpacity = 0.35 + enterProgress * 0.65;
 
-                plasmaMass.style.transform = `scale(${scale.toFixed(3)})`;
-                if (plasmaGlow) {
-                    plasmaGlow.style.opacity = glowOpacity.toFixed(2);
+                if (prismCore) {
+                    prismCore.style.transform = `scale(${scale.toFixed(3)})`;
+                }
+                if (prismGlow) {
+                    prismGlow.style.opacity = glowOpacity.toFixed(2);
                 }
             }
         }
@@ -909,8 +911,14 @@ function initGlobalFluidSimulation() {
     resizeCanvas();
 
     let startTime = performance.now();
+    let animationFrameId = null;
 
     function render(now) {
+        if (document.visibilityState === "hidden") {
+            animationFrameId = null;
+            return;
+        }
+
         const currentTime = ((now || performance.now()) - startTime) * 0.001;
 
         // Smooth mouse lerp
@@ -929,8 +937,23 @@ function initGlobalFluidSimulation() {
         gl.clear(gl.COLOR_BUFFER_BIT);
         gl.drawArrays(gl.TRIANGLES, 0, 6);
 
-        requestAnimationFrame(render);
+        animationFrameId = requestAnimationFrame(render);
     }
+
+    function handleVisibilityChange() {
+        if (document.visibilityState === "visible") {
+            if (!animationFrameId) {
+                animationFrameId = requestAnimationFrame(render);
+            }
+        } else {
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+        }
+    }
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     render();
 }

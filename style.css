@@ -1151,7 +1151,7 @@ body.menu-open .menu-toggle span:nth-child(3) {
 }
 
 .service-scene[data-service="marketing"] .logo img {
-    --logo-scale: 2.13;
+    --logo-scale: 2.16;
 }
 
 .service-scene.scene-active .logo img {
