@@ -1079,8 +1079,9 @@ body.menu-open .menu-toggle span:nth-child(3) {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: clamp(300px, 38vw, 560px);
-    height: clamp(280px, 36vh, 480px);
+    width: clamp(280px, 34vw, 480px);
+    height: clamp(280px, 34vw, 480px);
+    aspect-ratio: 1 / 1;
     max-width: 100%;
     flex-shrink: 0;
     pointer-events: none;
@@ -1129,29 +1130,11 @@ body.menu-open .menu-toggle span:nth-child(3) {
     }
 }
 
-/* Escala óptica individual para equilibrar visualmente el tamaño
-   de los 4 símbolos vectoriales dentro de su viewBox 1600x900 */
+/* Direcciones de rotación alternadas */
 
-.service-scene[data-service="branding"] .logo img {
-    --logo-scale: 2.13;
-}
-
-.service-scene[data-service="web"] .logo img {
-    --logo-scale: 1.93;
-    animation-direction: reverse;
-}
-
-.service-scene[data-service="graphic"] .logo img {
-    --logo-scale: 2.19;
-}
-
+.service-scene[data-service="web"] .logo img,
 .service-scene[data-service="video"] .logo img {
-    --logo-scale: 1.68;
     animation-direction: reverse;
-}
-
-.service-scene[data-service="marketing"] .logo img {
-    --logo-scale: 2.16;
 }
 
 .service-scene.scene-active .logo img {
@@ -3027,8 +3010,9 @@ body.project-panel-open {
     }
 
     .service-scene .logo {
-        width: clamp(240px, 60vw, 420px);
-        height: clamp(220px, 50vh, 360px);
+        width: clamp(240px, 50vw, 380px);
+        height: clamp(240px, 50vw, 380px);
+        aspect-ratio: 1 / 1;
     }
 
     .hero-grid {
@@ -3122,8 +3106,9 @@ body.project-panel-open {
     }
 
     .service-scene .logo {
-        width: clamp(200px, 75vw, 320px);
-        height: clamp(180px, 40vh, 260px);
+        width: clamp(200px, 70vw, 300px);
+        height: clamp(200px, 70vw, 300px);
+        aspect-ratio: 1 / 1;
     }
 
     .about-visual {
