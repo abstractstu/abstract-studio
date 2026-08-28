@@ -1100,8 +1100,8 @@ body.menu-open .menu-toggle span:nth-child(3) {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: clamp(280px, 34vw, 480px);
-    height: clamp(280px, 34vw, 480px);
+    width: clamp(230px, 28vw, 395px);
+    height: clamp(230px, 28vw, 395px);
     aspect-ratio: 1 / 1;
     max-width: 100%;
     flex-shrink: 0;
@@ -1169,7 +1169,7 @@ body.menu-open .menu-toggle span:nth-child(3) {
     font-family: var(--font-heading);
     font-weight: var(--fw-bold);
 
-    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
 
     line-height: .9;
 
@@ -1179,7 +1179,7 @@ body.menu-open .menu-toggle span:nth-child(3) {
 
     color: var(--text);
 
-    margin-bottom: 0.65rem;
+    margin-bottom: 0.5rem;
 
     text-wrap: balance;
 
@@ -1195,7 +1195,7 @@ body.menu-open .menu-toggle span:nth-child(3) {
     width: 100%;
     height: 2px;
 
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
 
     pointer-events: none;
     overflow: visible;
@@ -3012,7 +3012,7 @@ body.project-panel-open {
         flex-direction: column;
         justify-content: center;
         text-align: center;
-        gap: clamp(2rem, 4vw, 3rem);
+        gap: clamp(1.5rem, 3.5vw, 2.5rem);
         min-height: auto;
         padding-block: clamp(3.5rem, 6vw, 5.5rem);
     }
@@ -3031,8 +3031,8 @@ body.project-panel-open {
     }
 
     .service-scene .logo {
-        width: clamp(240px, 50vw, 380px);
-        height: clamp(240px, 50vw, 380px);
+        width: clamp(200px, 41vw, 315px);
+        height: clamp(200px, 41vw, 315px);
         aspect-ratio: 1 / 1;
     }
 
@@ -3127,8 +3127,8 @@ body.project-panel-open {
     }
 
     .service-scene .logo {
-        width: clamp(200px, 70vw, 300px);
-        height: clamp(200px, 70vw, 300px);
+        width: clamp(165px, 57vw, 245px);
+        height: clamp(165px, 57vw, 245px);
         aspect-ratio: 1 / 1;
     }
 
