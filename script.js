@@ -514,17 +514,6 @@ function smoothScroll() {
    UTILITIES
    ============================================================ */
 
-function debounce(fn, delay = 200) {
-
-    let timeoutId;
-
-    return function debounced(...args) {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => fn.apply(this, args), delay);
-    };
-
-}
-
 function throttle(fn, delay = 150) {
 
     let lastCall = 0;
@@ -551,77 +540,6 @@ function throttle(fn, delay = 150) {
 
 }
 
-/* ============================================================
-   SERVICES SCROLL ANIMATION FALLBACK
-   Para navegadores que no soportan CSS Scroll-Driven Animations
-   ============================================================ */
-
-function initServicesScrollFallback() {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    // Si el navegador soporta CSS animation-timeline nativo, el CSS se encarga
-    if (window.CSS && CSS.supports && CSS.supports('(animation-timeline: view()) and (animation-range: entry)')) {
-        return;
-    }
-
-    const scenes = document.querySelectorAll(".service-scene");
-    if (!scenes.length) return;
-
-    // Desactivar la transición CSS estática para controlar transform y opacity vía scroll
-    scenes.forEach(scene => {
-        scene.style.transition = "none";
-        scene.style.willChange = "transform, opacity";
-    });
-
-    function updateServiceCards() {
-        const vh = window.innerHeight;
-
-        scenes.forEach((scene) => {
-            const rect = scene.getBoundingClientRect();
-
-            // Fuera de pantalla completamente
-            if (rect.bottom <= 0 || rect.top >= vh) {
-                scene.style.transform = "scale(0.8)";
-                scene.style.opacity = "0.2";
-                return;
-            }
-
-            let progress = 1;
-            const entryDistance = Math.min(rect.height, vh * 0.6);
-
-            // Entrada por abajo
-            if (rect.top > vh - entryDistance) {
-                const distIntoView = vh - rect.top;
-                progress = Math.max(0, Math.min(1, distIntoView / entryDistance));
-            }
-            // Salida por arriba
-            else if (rect.bottom < entryDistance) {
-                progress = Math.max(0, Math.min(1, rect.bottom / entryDistance));
-            }
-
-            const scale = 0.8 + (0.2 * progress);
-            const opacity = 0.2 + (0.8 * progress);
-
-            scene.style.transform = `scale(${scale.toFixed(3)})`;
-            scene.style.opacity = opacity.toFixed(3);
-        });
-    }
-
-    let ticking = false;
-    function onScroll() {
-        if (!ticking) {
-            requestAnimationFrame(() => {
-                updateServiceCards();
-                ticking = false;
-            });
-            ticking = true;
-        }
-    }
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", updateServiceCards, { passive: true });
-    updateServiceCards();
-}
 
 /* ============================================================
    CINEMATIC CAMERA CONTROLLER (PLANO SECUENCIA CONTINUO)

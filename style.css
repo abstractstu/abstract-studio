@@ -42,17 +42,14 @@
     
     --bg: #050505;
     --surface: #0D0D0D;
-    --surface-2: #171717;
     --accent-rgb: 50, 100, 200;
     --white: #ffffff;
-    --primary: #3264d2;
     --primary-soft: #327de1;
     --accent: #3296ff;
 
     --text: #F5F5F5;
     --text-soft: #BDBDBD;
 
-    --black:#000;
     --transparent:transparent;
 
     /* ---------- Social Links Color Palette ---------- */
@@ -74,13 +71,6 @@
 
     --logo-size: 50px;
 
-    /* ---------- Icon Size ---------- */
-
-    --icon-sm: 16px;
-    --icon-md: 24px;
-    --icon-lg: 32px;
-    --icon-xl: 48px;
-    
     /* ---------- Fonts ---------- */
     
     --font-heading: "Rajdhani", sans-serif;
@@ -93,8 +83,6 @@
     --fs-md: 1rem;
     --fs-lg: 1.1rem;
     --fs-xl: 1.4rem;
-    --fs-2xl: 1.5rem;
-    --fs-3xl: clamp(2.6rem, 5.5vw, 5rem);
 
     /* ---------- Font Weight ---------- */
 
@@ -105,8 +93,6 @@
 
     /* ---------- Layout ---------- */
 
-    --container-sm:720px;
-    --container-md:960px;
     --container-lg:1280px;
     --container-xl:1440px;
     --header-height: 90px;
@@ -121,8 +107,6 @@
     /* ---------- Opacity ---------- */
 
     --opacity-low:.25;
-    --opacity-medium:.65;
-    --opacity-high:.85;
 
     /* ---------- Motion ---------- */
 
@@ -137,28 +121,13 @@
     --duration-slow: 400ms;
     --duration-slower: 700ms;
 
-    /* ---------- Motion Distance ---------- */
-
-    --motion-distance-sm: 12px;
-    --motion-distance-md: 20px;
-    --motion-distance-lg: 28px;
-
     /* ---------- Transitions ---------- */
 
     --transition-fast:
         all var(--duration-fast) var(--ease-fast);
 
-    --transition-standard:
-        all var(--duration-normal) var(--ease-standard);
-
     --transition-smooth:
         all var(--duration-normal) var(--ease-smooth);
-
-    --transition-opacity:
-        opacity var(--duration-normal) var(--ease-fast);
-
-    --transition-transform:
-        transform var(--duration-normal) var(--ease-standard);
 
     --transition-button:
         background var(--duration-normal) var(--ease-smooth),
@@ -180,9 +149,6 @@
     --transition-underline:
         transform var(--duration-normal) var(--ease-standard);
 
-    --transition-padding:
-        padding var(--duration-normal) var(--ease-smooth);
-
     --transition-reveal:
         opacity var(--duration-slower) var(--ease-smooth),
         transform var(--duration-slower) var(--ease-smooth);
@@ -197,7 +163,6 @@
 
     --radius-sm: 4px;
     --radius-md: 8px;
-    --radius-lg: 16px;
     --radius-full:999px;
 
     /* ---------- Z-index ---------- */
@@ -205,17 +170,10 @@
     --z-background: -1;
     --z-header: 100;
     --z-dropdown: 200;
-    --z-tooltip: 500;
-    --z-overlay: 900;
     --z-modal: 1000;
-    --z-toast: 1100;
     
-    /* ---------- Spacing ----------
-    Utilizar estas variables para márgenes, paddings, gaps y separaciones.
-    Evitar valores sueltos siempre que exista un equivalente dentro de esta escala.
-    -------------------------------- */
+    /* ---------- Spacing ---------- */
 
-    --space-3xs: .125rem;
     --space-2xs: .25rem;
     --space-xs: .5rem;
     --space-sm: .75rem;
@@ -229,14 +187,9 @@
 
     --space-xl: 4rem;
     --space-2xl: 8rem;
-    --space-3xl: 12rem;
-    --space-4xl: 16rem;
 
     /* ---------- Shadows ---------- */
 
-    --shadow-sm: 0 4px 12px rgb(0 0 0 / .16);
-    --shadow-md: 0 8px 24px rgb(0 0 0 / .24);
-    --shadow-lg: 0 16px 48px rgb(0 0 0 / .32);
     --shadow-accent: 0 8px 24px rgb(var(--accent-rgb) / .25);
     
     /* ---------- Focus ---------- */
@@ -250,8 +203,6 @@
     --laser-rgb: 50, 100, 200;
     --laser-core-rgb: 180, 225, 255;
 
-    --laser-border-opacity: .90;
-
     --laser-glow-sm: rgba(var(--laser-core-rgb), .95);
     --laser-glow-md: rgba(var(--laser-rgb), .70);
     --laser-glow-lg: rgba(var(--laser-rgb), .45);
@@ -261,9 +212,6 @@
     --laser-shadow-md: 0 0 12px var(--laser-glow-md);
     --laser-shadow-lg: 0 0 28px var(--laser-glow-lg);
     --laser-shadow-xl: 0 0 70px var(--laser-glow-xl);
-
-    --laser-blur: .3px;
-    --laser-drop-shadow: 0 0 8px rgba(var(--laser-rgb), .60);
 
 }
 
@@ -576,21 +524,6 @@ body.menu-open .menu-toggle span:nth-child(2) {
 
 body.menu-open .menu-toggle span:nth-child(3) {
     transform: translateY(-7px) rotate(-45deg);
-}
-
-/* ============================================================
-   Accessibility
-   ============================================================ */
-
-@media (prefers-reduced-motion: reduce) {
-
-    .header,
-    .header *,
-    .header *::before,
-    .header *::after {
-        transition: none !important;
-    }
-
 }
 
 /* ============================================================
@@ -1430,10 +1363,6 @@ body.menu-open .menu-toggle span:nth-child(3) {
         laserBreathing var(--laser-speed) ease-in-out infinite,
         laserPulse 5s ease-in-out infinite,
         laserHorizontalDrift calc(22s + var(--random-speed)) ease-in-out infinite;
-    
-        animation-delay:
-        0s,
-        0s;
 
 }
 
@@ -1712,18 +1641,6 @@ body.menu-open .menu-toggle span:nth-child(3) {
 
 }
 
-.scene-active .camera-light{
-
-    animation-duration:14s;
-
-}
-
-.scene-active .camera-light-secondary{
-
-    animation-duration:20s;
-
-}
-
 @keyframes rigHorizontalDrift{
 
     0%{
@@ -1800,46 +1717,6 @@ body.menu-open .menu-toggle span:nth-child(3) {
         transform:translate(-50%,-50%) scale(.94);
 
         opacity:.35;
-
-    }
-
-}
-
-@keyframes cameraSweep{
-
-    0%{
-
-        transform:
-
-            translate(-18%,-50%)
-
-            rotate(-18deg)
-
-            scale(1);
-
-    }
-
-    50%{
-
-        transform:
-
-            translate(18%,-50%)
-
-            rotate(-14deg)
-
-            scale(1.12);
-
-    }
-
-    100%{
-
-        transform:
-
-            translate(-18%,-50%)
-
-            rotate(-18deg)
-
-            scale(1);
 
     }
 
@@ -1952,36 +1829,6 @@ body.menu-open .menu-toggle span:nth-child(3) {
         transform:
             translate3d(12px,-5px,0)
             scale(1.035);
-
-    }
-
-}
-
-@keyframes cameraLight{
-
-    0%{
-
-        transform:
-            translate(-50%,-50%)
-            scale(.95);
-
-    }
-
-    50%{
-
-        transform:
-            translate(calc(-50% + 40px),
-                      calc(-50% - 20px))
-            scale(1.08);
-
-    }
-
-    100%{
-
-        transform:
-            translate(calc(-50% - 25px),
-                      calc(-50% + 25px))
-            scale(.98);
 
     }
 
@@ -2211,20 +2058,6 @@ body.menu-open .menu-toggle span:nth-child(3) {
     }
 }
 
-/* ============================================================
-   REDUCED MOTION
-   ============================================================ */
-
-@media (prefers-reduced-motion: reduce) {
-
-    .prism-core,
-    .laser-haze,
-    .hero-triangle,
-    .service-scene .logo {
-        animation: none;
-    }
-}
-
 .service-scene:nth-child(even) .service-content p {
     margin-left: auto;
     text-align: end;
@@ -2237,11 +2070,6 @@ body.menu-open .menu-toggle span:nth-child(3) {
 .contact {
     position: relative;
     overflow: hidden;
-
-    
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
 
     color: var(--white);
     text-align: center;
@@ -2664,19 +2492,6 @@ body.project-panel-open {
     animation: contactTextReveal 0.8s ease-out 0.5s forwards;
 }
 
-@media (prefers-reduced-motion: reduce) {
-
-    .contact h2,
-    .contact p,
-    .contact .primary-btn,
-    .contact .project-trigger {
-        opacity: 1;
-        animation: none;
-        transform: none;
-    }
-
-}
-
 /* ============================================================
    FOOTER
    ============================================================ */
@@ -3036,14 +2851,6 @@ body.project-panel-open {
         aspect-ratio: 1 / 1;
     }
 
-    .hero-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .hero-decoration {
-        display: none;
-    }
-
     .menu-list {
         gap: var(--space-lg);
     }
@@ -3135,13 +2942,6 @@ body.project-panel-open {
     .about-visual {
         min-height: 340px;
     }
-
-    
-    .about-glow {
-        width: 300px;
-        height: 300px;
-    }
-
 
     .menu-toggle {
         display: flex;
@@ -3240,7 +3040,6 @@ body.project-panel-open {
    CINEMATIC SINGLE TRACKING SHOT (PLANO SECUENCIA CONTINUO)
    ============================================================ */
 .hero-content,
-.hero-decoration,
 .about-visual,
 .contact {
     will-change: transform, opacity, filter;
